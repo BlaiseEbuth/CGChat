@@ -1,0 +1,12 @@
+{
+	"name": "CGChat",
+	"main": "https://www.codingame.com",
+	"node-remote": "https://www.codingame.com",
+	"inject_js_end": "cgchat.js",
+	"window":
+	{
+		"title": "CGChat",
+		"id": "CGChat",
+		"icon": "icon.png"
+	}
+}
