@@ -3,7 +3,7 @@
 // @namespace   Turtle Scripts
 // @match       https://www.codingame.com/*
 // @grant       none
-// @version     2.0
+// @version     2.0.1
 // @author      BlaiseEbuth
 // @description A stand alone version of the Codingame's chat.
 // ==/UserScript==
@@ -29,11 +29,6 @@ function getElement(elementName, elementType = "class", elementIndex = 0)
     element = document.getElementById(elementName);
 
   return element;
-}
-
-function setTitle(title)
-{
-	getElement("title", "tag").innerHTML = title;
 }
 
 function hideElement(element)
@@ -67,6 +62,9 @@ function styleLogIn()
 
 function styleChat()
 {
+  if(getElement("small-chat"))
+    getElement("hide-btn").click();
+  
   hideElement(getElement("left-column"));
   hideElement(getElement("hide-wrapper"));
   hideElement(getElement("help-center"));
@@ -76,13 +74,10 @@ function styleChat()
   getElement("chat-wrapper").setAttribute('style', 'display: flex !important; width: 100% !important;');
 	getElement("chat", "id").setAttribute('style', 'display: flex !important; width: 100% !important;');
 
-  if(getElement("small-chat"))
-    getElement("hide-btn").click();
-
   getElement("chat").style.width = "100%";
   getElement("messages").style.width = "100%";
   getElement("settings-btn").style.margin = "0";
-
+  
   var setPopup = getElement("settings-popup");
 
   setPopup.style.width = "100px";
@@ -95,45 +90,12 @@ function styleChat()
   hideElement(settings[settings.length - 1].children[1]);
 }
 
-function fixLinks()
-{
-	var links = document.getElementsByTagName("a");
-
-	for(var i = 0; i < links.length; ++i)
-	{
-		if(links[i].hasAttribute("countdown"))
-		{
-			var countdown = links[i].getAttribute("countdown");
-
-			if(countdown > 0)
-				links[i].setAttribute("countdown", --countdown);
-		}
-		else
-			links[i].setAttribute('countdown', 0)
-	}
-
-	$('a').on('click', function()
-	{
-		if(this.getAttribute("countdown") == 0)
-		{
-		  require('nw.gui').Shell.openExternal(this.href);
-			this.setAttribute('countdown', 10)
-		}
-   	return false;
-	});
-}
-
 function main()
 {
-	setTitle("CGChat");
-
 	if(getLocation() == "start")
     styleLogIn();
   else
-	{
-		fixLinks();
     styleChat();
-	}
 }
 
 setInterval(main, 100);
